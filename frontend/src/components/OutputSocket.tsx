@@ -7,7 +7,6 @@ const Styles = styled.div`
   display: inline-block;
   cursor: pointer;
   border: 1px solid grey;
-  border-radius: 6px;
   background-color: #5a5a5aff;
   width: ${$socketsize}px;
   height: ${$socketsize * 2}px;
@@ -20,8 +19,11 @@ const Styles = styled.div`
   }
 `;
 
-export function CustomSocket<T extends ClassicPreset.Socket>(props: {
+export function OutputSocket<T extends ClassicPreset.Socket>(props: {
   data: T;
 }) {
-  return <Styles title={props.data.name} />;
+  return <Styles style={{
+    borderTopLeftRadius: "6px",
+    borderBottomLeftRadius: "6px",
+  }} title={props.data.name} />;
 };

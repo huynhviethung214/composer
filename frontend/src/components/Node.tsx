@@ -1,64 +1,10 @@
-import { $nodewidth, $socketmargin, $socketsize } from "@/constants";
-import { Box, Stack, Typography } from "@mui/material";
+import { EditorNodeStyles, NodeExtraData } from "@/styles/NodeStyles";
+import { Box, Typography } from "@mui/material";
 import { ClassicScheme, Presets, RenderEmit } from "rete-react-plugin";
-import styled, { css } from "styled-components";
+
 
 const { RefSocket, RefControl } = Presets.classic;
 
-type NodeExtraData = { width?: number; height?: number };
-
-export const NodeStyles = styled.div<
-  NodeExtraData & { selected: boolean; styles?: (props: any) => any }
->`
-  cursor: pointer;
-  box-sizing: border-box;
-  position: relative;
-  user-select: none;
-  ${(props) =>
-    props.selected &&
-    css`
-      border-color: red;
-    `}
-  .title {
-    font-family: sans-serif;
-    font-size: 18px;
-    padding: 8px;
-  }
-  .output {
-    text-align: right;
-  }
-  .input {
-    text-align: left;
-  }
-  .output-socket {
-    display: inline-block;
-    text-align: right;
-  }
-  .input-socket {
-    display: inline-block;
-    text-align: left;
-  }
-  .input-title,
-  .output-title {
-    vertical-align: middle;
-    display: inline-block;
-    font-family: sans-serif;
-    font-size: 14px;
-    margin: ${$socketmargin}px;
-    line-height: ${$socketsize}px;
-  }
-  .input-control {
-    z-index: 1;
-    width: calc(100% - ${$socketsize + 2 * $socketmargin}px);
-    vertical-align: middle;
-    display: inline-block;
-  }
-  .control {
-    display: block;
-    padding: ${$socketmargin}px ${$socketsize / 2 + $socketmargin}px;
-  }
-  ${(props) => props.styles && props.styles(props)}
-`;
 
 type Props<S extends ClassicScheme> = {
   data: S["Node"] & NodeExtraData;
@@ -72,10 +18,9 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
   const controls = Object.entries(props.data.controls);
   const selected = props.data.selected || false;
   const { id, label, width, height } = props.data;
-  console.log(props);
 
   return (
-    <NodeStyles
+    <EditorNodeStyles
       selected={selected}
       width={width}
       height={height}
@@ -189,6 +134,6 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
           )}
         </Box>
       </Box>
-    </NodeStyles>
+    </EditorNodeStyles>
   );
 }

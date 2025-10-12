@@ -1,7 +1,7 @@
 "use client";
 
 import ReteEditor from "@/components/Editor";
-import { Container, Typography, Paper } from "@mui/material";
+import { Container, Paper, Typography } from "@mui/material";
 
 export default function HomePage() {
   return (
