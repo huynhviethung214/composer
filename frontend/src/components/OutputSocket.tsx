@@ -7,7 +7,7 @@ const Styles = styled.div`
   display: inline-block;
   cursor: pointer;
   border: 1px solid grey;
-  background-color: #5a5a5aff;
+  background-color: #ffffffff;
   width: ${$socketsize}px;
   height: ${$socketsize * 2}px;
   vertical-align: middle;
