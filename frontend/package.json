@@ -20,6 +20,7 @@
     "postcss": "^8.5.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.65.0",
     "rete": "^2.0.6",
     "rete-area-plugin": "^2.1.5",
     "rete-connection-plugin": "^2.0.5",

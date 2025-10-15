@@ -1,51 +1,54 @@
-import { Button, FormControl, TextField } from "@mui/material";
-import { useState } from "react";
+import { Box, FormControl, TextField } from "@mui/material";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 type ConfigurationFormProps = {
   selectedNodeConfiguration: Record<string, string>;
   selectedNodeId: string;
 };
 
-export const ConfigurationForm = (props: ConfigurationFormProps) => {
-  const [formState, setFormState] = useState<
-    typeof props.selectedNodeConfiguration
-  >(props.selectedNodeConfiguration);
+export const ConfigurationForm = ({
+  selectedNodeConfiguration,
+  selectedNodeId,
+}: ConfigurationFormProps) => {
+  const { control, watch, reset } = useForm<Record<string, string>>({
+    defaultValues: selectedNodeConfiguration,
+  });
+
+  const formValues = watch(); // all current field values
+
+  // Whenever selected node changes → reset form values
+  useEffect(() => {
+    reset(selectedNodeConfiguration);
+  }, [selectedNodeConfiguration, reset]);
+
+  // Example: Persist form values or handle changes
+  useEffect(() => {
+    console.log("Form changed:", formValues);
+    // You could persist to localStorage, Redux, or server here
+  }, [formValues]);
 
   return (
-    <FormControl>
-      {props.selectedNodeConfiguration && (
-        <div>
-          {Object.entries(formState).map(
-            ([fieldName, fieldDefaultValue], index) => {
-              return (
+    <Box>
+      {Object.entries(selectedNodeConfiguration).map(([fieldName], index) => (
+        <Controller
+          key={`${fieldName}-${index}-${selectedNodeId}`}
+          name={fieldName}
+          control={control}
+          render={({ field }) => (
+            <Box>
+              <FormControl fullWidth>
                 <TextField
-                  defaultValue={fieldDefaultValue}
-                  key={`${fieldName}-${index}-${props.selectedNodeId}`}
-                  sx={{
-                    marginBottom: "16px",
-                    width: "100%",
-                  }}
+                  {...field}
                   label={fieldName}
-                  onChange={(ev) => {
-                    setFormState((prev: Record<string, string>) => {
-                      console.log(prev);
-                      console.log({
-                        ...prev,
-                        [fieldName]: ev.target.value,
-                      });
-                      return {
-                        ...prev,
-                        [fieldName]: ev.target.value,
-                      };
-                    });
-                  }}
+                  variant="outlined"
+                  margin="normal"
                 />
-              );
-            }
+              </FormControl>
+            </Box>
           )}
-        </div>
-      )}
-      <Button onSubmit={() => {}}>Submit</Button>
-    </FormControl>
+        />
+      ))}
+    </Box>
   );
 };
